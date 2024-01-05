@@ -9,9 +9,8 @@ use crate::supported_term::SupportedTerm;
 
 // We need to define our own struct so we can limit what it can accept
 // and so we can invoke resource! in it
+// It's also a mutex so we can make it mutable
 pub struct ZipTreeOfTerms(Mutex<ZipTree<SupportedTerm,SupportedTerm>>);
-
-type ZipTreeArc = ResourceArc<ZipTreeOfTerms>;
 
 mod atoms {
     rustler::atoms! {
@@ -25,7 +24,7 @@ mod atoms {
 }
 
 #[rustler::nif]
-fn new() -> (Atom, ZipTreeArc){
+fn new() -> (Atom, ResourceArc<ZipTreeOfTerms>){
     let resource = ResourceArc::new(ZipTreeOfTerms(Mutex::new(ZipTree::new())));
 
     (atoms::ok(), resource)
@@ -48,6 +47,7 @@ fn put(resource: ResourceArc<ZipTreeOfTerms>, key: Term, value: Term) -> Result<
         Ok(guard) => guard,
     };
 
+    // We allow any Term, but make sure they are supported
     let valid_key = match convert_to_supported_term(&key) {
         None => return Err(atoms::unsupported_type()),
         Some(term) => term,
@@ -68,6 +68,7 @@ fn put(resource: ResourceArc<ZipTreeOfTerms>, key: Term, value: Term) -> Result<
 
 rustler::init!("Elixir.ZipTree.Nif", [new, size, put], load = load);
 
+// Makes the struct be supported by rustler so it can be returned in functions
 fn load(env: Env, _info: Term) -> bool {
     rustler::resource!(ZipTreeOfTerms, env);
     true
