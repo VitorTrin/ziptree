@@ -1,5 +1,9 @@
 defmodule ZipTree.Nif do
-    use Rustler, otp_app: :ziptree, crate: "ziptree_nif"
-  
-    def new(), do: :erlang.nif_error(:nif_not_loaded)
-  end
+  use Rustler, otp_app: :ziptree, crate: "ziptree_nif"
+
+  def new(), do: :erlang.nif_error(:nif_not_loaded)
+
+  def size(_ziptree), do: :erlang.nif_error(:nif_not_loaded)
+
+  def put(_ziptree, _key, _value), do: :erlang.nif_error(:nif_not_loaded)
+end
