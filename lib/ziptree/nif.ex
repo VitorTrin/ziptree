@@ -8,4 +8,6 @@ defmodule ZipTree.Nif do
   def put(_ziptree, _key, _value), do: :erlang.nif_error(:nif_not_loaded)
 
   def delete(_ziptree, _key), do: :erlang.nif_error(:nif_not_loaded)
+
+  def get(_ziptree, _key), do: :erlang.nif_error(:nif_not_loaded)
 end

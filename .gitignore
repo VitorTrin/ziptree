@@ -27,4 +27,5 @@ ziptree-*.tar
 
 /priv
 
-/.lexical/
+.lexical/
+.elixir_ls/
