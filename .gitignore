@@ -26,3 +26,5 @@ ziptree-*.tar
 /tmp/
 
 /priv
+
+/.lexical/
