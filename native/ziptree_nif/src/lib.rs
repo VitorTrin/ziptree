@@ -19,7 +19,8 @@ mod atoms {
         lock_fail,
         unsupported_type,
         failed_to_insert,
-        nil
+        nil,
+        not_found
     }
 }
 
@@ -81,7 +82,7 @@ fn delete(resource: ResourceArc<ZipTreeOfTerms>, key: Term) -> Result<SupportedT
 
     match ziptree.remove(&valid_key){
         // Did not have this key
-        None => Ok(SupportedTerm::Atom("nil".to_string())),
+        None => Err(atoms::not_found()),
         // Had the key
         Some(term) => Ok(term),
     }
@@ -102,13 +103,13 @@ fn get(resource: ResourceArc<ZipTreeOfTerms>, key: Term) -> Result<SupportedTerm
 
     match ziptree.get(&valid_key){
         // Did not have this key
-        None => Ok(SupportedTerm::Atom("nil".to_string())),
+        None => Err(atoms::not_found()),
         // Had the key
         Some(&ref term) => Ok(term.clone()),
     }
 }
 
-rustler::init!("Elixir.ZipTree.Nif", [new, size, put, delete, get], load = load);
+rustler::init!("Elixir.Ziptree.Nif", [new, size, put, delete, get], load = load);
 
 // Makes the struct be supported by rustler so it can be returned in functions
 fn load(env: Env, _info: Term) -> bool {
