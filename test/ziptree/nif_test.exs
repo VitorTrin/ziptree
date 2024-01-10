@@ -1,5 +1,5 @@
 defmodule Ziptree.NifTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias Ziptree.Nif
 

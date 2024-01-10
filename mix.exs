@@ -7,7 +7,9 @@ defmodule Ziptree.MixProject do
       version: "0.1.0",
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases(),
+      preferred_cli_env: cli()
     ]
   end
 
@@ -20,7 +22,21 @@ defmodule Ziptree.MixProject do
   defp deps do
     [
       {:rustler, "~> 0.30.0"},
-      {:ex_doc, "~> 0.31.0", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.31.0", only: :dev, runtime: false},
+      {:benchee, "~> 1.3", only: :test}
+    ]
+  end
+
+  defp aliases do
+    [
+      test: ["test --exclude benchmark"],
+      benchmark: ["test --only benchmark"]
+    ]
+  end
+
+  defp cli do
+    [
+      {:benchmark, :test}
     ]
   end
 end
