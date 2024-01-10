@@ -22,11 +22,21 @@ defmodule Ziptree do
   @spec size(ziptree()) :: {:ok, integer()}
   defdelegate size(ziptree), to: Nif
 
-  @spec put(ziptree(), key :: term(), value :: term()) :: {:ok, term() | nil}
-  defdelegate put(ziptree, key, value), to: Nif
+  @spec put(ziptree(), key :: term(), value :: term()) :: {:ok, ziptree() | nil}
+  def put(ziptree, key, value) do
+    case Nif.put(ziptree, key, value) do
+      {:ok, _} -> {:ok, ziptree}
+      other -> other
+    end
+  end
 
   @spec delete(ziptree(), key :: term()) :: {:ok, term() | nil}
-  defdelegate delete(ziptree, key), to: Nif
+  def delete(ziptree, key) do
+    case Nif.delete(ziptree, key) do
+      {:ok, _} -> {:ok, ziptree}
+      other -> other
+    end
+  end
 
   @spec get(ziptree(), key :: term()) :: {:ok, term()} | {:error, :not_found}
   defdelegate get(ziptree, key), to: Nif
