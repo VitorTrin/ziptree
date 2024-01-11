@@ -1,21 +1,15 @@
 # Ziptree
 
-**TODO: Add description**
+## What is a zip tree?
+  Zip tree is a random access data structure that is equivalent to a skiplist,
+  but instead of being stored in multiple arrays it is stored in a binary balanced tree.
 
-## Installation
+  It was created in 2018 [Zip Trees, by Robert E. Tarjan, Caleb C. Levy, Stephen Timmel](https://arxiv.org/abs/1806.06726) and then futher improved
+  in 2023 [Zip-zip Trees: Making Zip Trees More Balanced, Biased, Compact, or Persistent by Ofek Gila, Michael T. Goodrich, Robert E. Tarjan](https://arxiv.org/abs/2307.07660)
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ziptree` to your list of dependencies in `mix.exs`:
+## What is this lib?
 
-```elixir
-def deps do
-  [
-    {:ziptree, "~> 0.1.0"}
-  ]
-end
-```
+This is a nif for the rust implementation of zip trees, more specifically the zip zip tree implementation.
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/ziptree>.
-
+Big thanks to Discord for their [sorted_set_nif](https://github.com/discord/sorted_set_nif) that is a great
+tutorial in how to use rustler to export rust data types to elixir.
